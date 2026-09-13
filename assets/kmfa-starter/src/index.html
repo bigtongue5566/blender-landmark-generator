@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#151d22">
+<meta name="description" content="探索以 Blender 製作的高雄市立美術館三維模型。自由旋轉、切換建築視角、調整日照與園區景觀。">
+<title>高美館 · 建築漫遊 | KMFA Architecture Atlas</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23151d22'/%3E%3Cpath d='M12 46V20h8v13l14-13h12L30 35l17 11H34L20 36v10z' fill='%23e5c38c'/%3E%3C/svg%3E">
+<style>/*__STYLE__*/</style>
+</head>
+<body>
+<div id="viewport" role="img" aria-label="高雄市立美術館互動三維模型；拖曳旋轉，滾輪縮放" tabindex="0"></div>
+<header class="masthead">
+ <div class="brand-mark" aria-hidden="true">K<span>／</span></div>
+ <div class="brand"><div class="eyebrow">ARCHITECTURE ATLAS <span>01 / KAOHSIUNG</span></div><h1>高雄市立美術館<span>KMFA</span></h1></div>
+ <div class="header-actions"><button id="aboutBtn" class="quiet">關於模型 <span>↗</span></button><button id="panelToggle" class="quiet" aria-expanded="true" aria-controls="inspector">場景設定 <span>☷</span></button></div>
+</header>
+<div class="scene-caption"><span class="small-rule"></span><span>內惟埤・藝術與自然之間</span><small>PHOTO-INFORMED BLENDER STUDY</small></div>
+<div id="loading" role="status"><span class="loader"></span><strong>展開高美館園區</strong><small>載入建築模型…</small></div>
+<aside id="inspector" aria-label="場景控制面板">
+ <div class="panel-heading"><div><span class="eyebrow">SCENE STUDIO</span><h2>建築漫遊</h2></div><button id="reset" title="重設所有設定" aria-label="重設所有設定">↺</button></div>
+ <section><h3><span>01</span>觀景位置</h3><div class="view-grid">
+  <button data-view="overview" class="active" aria-pressed="true"><span>◇</span>園區鳥瞰</button>
+  <button data-view="front" aria-pressed="false"><span>▱</span>館前廣場</button>
+  <button data-view="lake" aria-pressed="false"><span>≈</span>湖畔視角</button>
+  <button data-view="top" aria-pressed="false"><span>⊞</span>俯視平面</button>
+ </div></section>
+ <section><h3><span>02</span>光影研究</h3><label class="field" for="mood">光線氛圍<select id="mood"><option value="day">晴朗午後</option><option value="golden">金色時刻</option><option value="blue">藍調傍晚</option></select></label>
+ <label class="range-label" for="sun">太陽高度<output id="sunValue">48°</output></label><input id="sun" type="range" min="10" max="85" value="48">
+ <label class="range-label" for="exposure">畫面亮度<output id="exposureValue">100%</output></label><input id="exposure" type="range" min="60" max="160" value="100">
+ </section>
+ <section><h3><span>03</span>模型與景觀</h3><label class="field" for="material">材質模式<select id="material"><option value="original">原色 · 磚紅與湖綠</option><option value="clay">白模 · 建築體量</option></select></label>
+ <label class="toggle-row">園區植栽<input type="checkbox" id="vegetation" checked><span class="switch"></span></label>
+ <label class="toggle-row">人物尺度<input type="checkbox" id="people" checked><span class="switch"></span></label>
+ <label class="toggle-row">地標標示<input type="checkbox" id="labels" checked><span class="switch"></span></label>
+ <label class="toggle-row">自動環繞<input type="checkbox" id="orbit"><span class="switch"></span></label>
+ </section>
+ <div class="panel-foot"><button id="capture" class="export-btn">儲存此刻 <span>↓ PNG</span></button><button id="download" class="text-btn">下載 3D 模型 <span>GLB ↗</span></button></div>
+ <div class="model-note">依照片製作的外觀展示模型<br>園區配置與尺寸為近似值</div>
+</aside>
+<div id="landmarks" aria-hidden="true"></div>
+<div class="bottom-bar"><div class="view-pill"><span class="live-dot"></span><span id="viewName">園區鳥瞰</span><span class="separator"></span><span id="modelState">模型載入中</span></div><div class="navigation-hint">拖曳旋轉<span>·</span>滾輪縮放<span>·</span>右鍵平移</div></div>
+<div class="compass" title="模型方位示意，非測繪定向"><span>方位示意</span><div id="compassNeedle">↑</div></div>
+<dialog id="about"><div class="dialog-head"><span class="eyebrow">ABOUT THIS STUDY</span><button id="closeAbout" aria-label="關閉">×</button></div><h2>在美術館，<br>看見一座公園。</h2><p>高美館於 1994 年開館。建築的採光天窗以被削切的三角形呼應半屏山，園區以水、樹林與步道串起藝術和自然。</p><p>本模型以 Blender 建立館體、玻璃斜頂、半圓迴廊、廣場及湖畔景觀，再以三維格式呈現於網頁。可自由探索外觀與光影。</p><div class="scope"><strong>模型範圍</strong><p>依公開照片推估比例，非官方模型或測繪成果；呈現主館及部分園區的示意配置。植栽、人物與抽象雕塑為情境元素，並非逐一復原的實際物件。未把外觀改造競圖提案當作已建成外觀。</p></div><h3>參考資料</h3><a href="https://www.kmfa.gov.tw/ArtBioPark/tour/tour03.htm" target="_blank" rel="noopener">高美館｜園區規劃歷程 <span>↗</span></a><a href="https://khh.travel/en/attractions/detail/398/" target="_blank" rel="noopener">高雄旅遊網｜館舍與空拍照片 <span>↗</span></a><a href="https://developers.openai.com/showcase/procedural-city-generator" target="_blank" rel="noopener">互動概念｜Procedural City Generator <span>↗</span></a><small>建模參考查閱：2026.09.12 · 非官方展示</small></dialog>
+<div id="toast" role="status"></div>
+<script id="model-data" type="application/octet-stream">/*__MODEL__*/</script>
+<script>/*__APP__*/</script>
+</body></html>
