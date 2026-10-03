@@ -6,13 +6,17 @@
 |---|---|
 | scripts/model.py | 重建主體幾何與地景、場景名稱、GLB／blend 名稱、相機、來源特有造型；保留按材質合併與單一場景匯出 |
 | src/index.html | 頁面標題、品牌、描述、控制選項、關於模型與來源、日期、近似限制 |
-| src/app.js | 四個視角的 position／target／zoom、地標位置、原色／白模、圖層辨識及下載名 |
+| src/app.js | 各視角的 position／target／zoom；按標的增加俯視、入口或坡道視角；地標位置、原色／白模、圖層辨識及下載名 |
 | src/style.css | 標的需要的配色與構圖；保留手機面板、鍵盤 focus、reduced-motion |
 | scripts/build.mjs | GLB 輸入路徑和離線 HTML 輸出名 |
 | scripts/check.mjs | GLB 路徑、該標的實際需要的集合；無水域建築不應保留 Water 必填。仍需驗證單一場景和 HTML 內嵌一致性 |
 | DESIGN.md / README.md | 新來源、近似範圍、執行方法、實際驗證狀態 |
 
 Blender 的座標為 Z 向上，glTF／Three.js 為 Y 向上。預設匯出時 `(x,y,z)` 對應 `(x,z,-y)`；確認匯出設定後才放置相機與地標。
+
+採用 Earth／街景時，先讀 [Earth 與街景建模](google-earth-street-view.md)，記錄北向、道路及 Blender 軸向的對應。先修改棟體輪廓、連接、寬深與間距，再調相機；不要用較有利的角度代替形體修正。
+
+有凹口、露臺或中庭時使用符合輪廓的幾何，不能以實心方塊填滿空間。有地下車道時同步修改 Blender 地坪與檢視器額外建立的地板，確保坡道上方開口與淨空。需要獨立顯示的車庫門、坡道與地坪應使用不同 metadata 圖層。
 
 高美館範例的植栽切換依 `Landscape` 加 `Canopy`／`Bark` 的物件名，人物依 `People`。改動集合或材質名時同步更改網頁判斷，或直接改用匯出的 `userData.layer`。不要將地坪也當成植栽隱藏。
 
